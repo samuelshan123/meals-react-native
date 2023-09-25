@@ -1,6 +1,5 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
-import Categories from "./src/screens/Categories";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
 import * as SplashScreen from "expo-splash-screen";
@@ -8,6 +7,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MealsOverview from "./src/screens/MealsOverview";
 import MealDetail from "./src/screens/MealDetail";
+import DrawerNavigation from "./DrawerNavigation";
+import FavouriteContextProvider from "./store/context/favourites-context";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +33,8 @@ export default function App() {
     // contentStyle:{backgroundColor:'black'}
   };
 
+
+
   useEffect(() => {
     async function prepare() {
       try {
@@ -51,16 +55,22 @@ export default function App() {
     return null; // Optionally, you can show a loading spinner or another component while waiting for fonts
   }
 
+  
+
   return (
     <>
       <StatusBar style="light" />
+      <FavouriteContextProvider>
       <NavigationContainer>
         <Stack.Navigator screenOptions={screenOptions}>
-          <Stack.Screen options={
+          {/* <Stack.Screen options={
            {
              title:'All Categories'
             }
-          } name="MealsCategories" component={Categories} />
+          } name="MealsCategories" component={Categories} /> */}
+            <Stack.Screen options={{
+              headerShown:false
+            }} name="Drawer" component={DrawerNavigation} />
           <Stack.Screen
            name="MealsOverview" component={MealsOverview} />
             <Stack.Screen
@@ -68,6 +78,8 @@ export default function App() {
         </Stack.Navigator>
         
       </NavigationContainer>
+
+      </FavouriteContextProvider>
     </>
   );
 }
