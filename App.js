@@ -9,7 +9,8 @@ import MealsOverview from "./src/screens/MealsOverview";
 import MealDetail from "./src/screens/MealDetail";
 import DrawerNavigation from "./DrawerNavigation";
 import FavouriteContextProvider from "./store/context/favourites-context";
-
+import { Provider } from "react-redux";
+import {store} from './store/redux/store'
 
 const Stack = createNativeStackNavigator();
 
@@ -55,12 +56,13 @@ export default function App() {
     return null; // Optionally, you can show a loading spinner or another component while waiting for fonts
   }
 
-  
+
 
   return (
     <>
       <StatusBar style="light" />
-      <FavouriteContextProvider>
+      {/* <FavouriteContextProvider> */}
+       <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={screenOptions}>
           {/* <Stack.Screen options={
@@ -78,8 +80,8 @@ export default function App() {
         </Stack.Navigator>
         
       </NavigationContainer>
-
-      </FavouriteContextProvider>
+      </Provider>
+      {/* </FavouriteContextProvider> */}
     </>
   );
 }

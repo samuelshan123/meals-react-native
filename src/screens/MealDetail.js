@@ -4,21 +4,29 @@ import MealDetails from "../components/MealDetails";
 import { useContext, useLayoutEffect } from "react";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { FavouriteContext } from "../../store/context/favourites-context";
+import { useDispatch, useSelector } from "react-redux";
+import { addFavourite, removeFavourite } from "../../store/redux/favourites";
 
 function MealDetail({ route,navigation }) {
-  const favouriteMealCtx = useContext(FavouriteContext);
+  // const favouriteMealCtx = useContext(FavouriteContext);
+  const favouriteMealIds = useSelector((state)=>state.favouriteMeals.ids);
+  console.log(favouriteMealIds);
+  const dispach =useDispatch()
   const mealId = route.params.mealId;
   const selectedMeal = MEALS.find((meal) => meal.id === mealId);
+  const mealIsFavourite = favouriteMealIds.includes(mealId);
 
-  const mealIsFavourite = favouriteMealCtx.ids.includes(mealId);
+  // const mealIsFavourite = favouriteMealCtx.ids.includes(mealId);
 
   function addToFavouritesHandler(){
 
     if(mealIsFavourite){
-        favouriteMealCtx.removeFavourite(mealId);
+        // favouriteMealCtx.removeFavourite(mealId);
+        dispach(removeFavourite({id:mealId}));
     }
     else{
-     favouriteMealCtx.addFavourite(mealId);
+    //  favouriteMealCtx.addFavourite(mealId);
+        dispach(addFavourite({id:mealId}));
     }
 
 }
